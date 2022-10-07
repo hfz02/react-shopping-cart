@@ -2,7 +2,7 @@
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);
 
 :root {
-  /* --main-color: #6394F8; */
+  --main-color: #6394F8;
   --light-text: #ABB0BE;
 }
 
@@ -171,7 +171,7 @@ body {
 }
 
 .main-color-text {
-  color: #6394F8;
+  color: var(--main-color);
 }
 
 nav {
@@ -226,39 +226,4 @@ ul > li > a:hover {
   clear: both;
 }
 
-/*  */
 
-@media (min-width: 1025px) {
-  .h-custom {
-    height: 100vh !important;
-    }
-  }
-  
-.card-registration .select-input.form-control[readonly]:not([disabled]) {
-  font-size: 1rem;
-  line-height: 2.15;
-  padding-left: .75em;
-  padding-right: .75em;
-}
-
-.card-registration .select-arrow {
-  top: 13px;
-}
-
-.bg-grey {
-  background-color: #eae8e8;
-}
-
-@media (min-width: 992px) {
-  .card-registration-2 .bg-grey {
-  border-top-right-radius: 16px;
-  border-bottom-right-radius: 16px;
-  }
-}
-
-@media (max-width: 991px) {
-  .card-registration-2 .bg-grey {
-  border-bottom-left-radius: 16px;
-  border-bottom-right-radius: 16px;
-  }
-}
