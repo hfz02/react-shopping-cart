@@ -1,15 +1,12 @@
 {
   "files": {
-    "main.css": "/react-shopping-cart/static/css/main.d1f93f2e.css",
-    "main.js": "/react-shopping-cart/static/js/main.b1694ccb.js",
-    "static/js/787.fe0e4ddc.chunk.js": "/react-shopping-cart/static/js/787.fe0e4ddc.chunk.js",
-    "index.html": "/react-shopping-cart/index.html",
-    "main.d1f93f2e.css.map": "/react-shopping-cart/static/css/main.d1f93f2e.css.map",
-    "main.b1694ccb.js.map": "/react-shopping-cart/static/js/main.b1694ccb.js.map",
-    "787.fe0e4ddc.chunk.js.map": "/react-shopping-cart/static/js/787.fe0e4ddc.chunk.js.map"
+    "main.css": "/react-shopping-cart/static/css/main.7969f608.css",
+    "main.js": "/react-shopping-cart/static/js/main.ad4920eb.js",
+    "static/media/mockup-white-wall-with-flower-vase-shelf3d-rendering.jpg": "/react-shopping-cart/static/media/mockup-white-wall-with-flower-vase-shelf3d-rendering.f33d47cd2696607e0a50.jpg",
+    "index.html": "/react-shopping-cart/index.html"
   },
   "entrypoints": [
-    "static/css/main.d1f93f2e.css",
-    "static/js/main.b1694ccb.js"
+    "static/css/main.7969f608.css",
+    "static/js/main.ad4920eb.js"
   ]
 }
