@@ -1,18 +1,22 @@
-import { combineReducers } from "redux"
+// import { combineReducers } from "redux"
 import { 
     GET_ALL_PRODUCT,
     GET_SELECTED_PRODUCT,
     REMOVE_SELECTED_PRODUCT,
     ADD_TO_CART, 
+    DELETE_ITEM,
     DELETE_CART,
     DECREASE_QUANTITY, 
-    INCREASE_QUANTITY
+    INCREASE_QUANTITY,
+    CREATE_ORDER,
+    CLEAR_ORDER,
 } from '../actions'
 
 export const initProduct = {
     _products: [],
-    cart: [],
     selectedProduct: null,
+    cart: [],
+    order: null,
 }
 
 function cartReducer(state = initProduct, { type, payload }) {
@@ -26,20 +30,36 @@ function cartReducer(state = initProduct, { type, payload }) {
 
         case ADD_TO_CART:
             const item = state._products.find(product => product.id === payload.id)
+            const selectedItem = state.selectedProduct
             const inCart = state.cart.find(item => item.id === payload.id ? true : false)
             return {
                 ...state,
                 cart: inCart ? 
                 state.cart.map(item => item.id === payload.id ? { ...item, qty: item.qty + 1 } : item)                
-                : [ ...state.cart, { ...item, qty: 1 } ]
+                : [ ...state.cart, { ...item, ...selectedItem, qty: 1 } ]
             }
+            
+        case GET_SELECTED_PRODUCT:
+            return { ...state, selectedProduct: payload }
+            
+        case CREATE_ORDER:
+            return { ...state, order: payload }
 
-        case DELETE_CART:
+        case DELETE_ITEM:
             return {
                 ...state,
                 cart: state.cart.filter(item => item.id !== payload.id)
             }
 
+        case REMOVE_SELECTED_PRODUCT:
+            return { ...state, selectedProduct: null }
+
+        case DELETE_CART:
+            return { ...state, cart: [] }
+        
+        case CLEAR_ORDER:
+            return { ...state, order: null }    
+                        
         case INCREASE_QUANTITY:
             return { 
                 ...state, 
@@ -61,19 +81,13 @@ function cartReducer(state = initProduct, { type, payload }) {
                 })
             }
 
-        case GET_SELECTED_PRODUCT:
-            return { ...state, selectedProduct: payload }
-        
-        case REMOVE_SELECTED_PRODUCT:
-            return { ...state, selectedProduct: null }
-
         default:
             return state
     }
 }
 
-const rootReducer = combineReducers({
-  cart: cartReducer,
-})
+// const rootReducer = combineReducers({
+//   cart: cartReducer,
+// })
 
-export default rootReducer
+export default cartReducer

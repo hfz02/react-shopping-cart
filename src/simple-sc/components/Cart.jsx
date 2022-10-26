@@ -1,25 +1,65 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Footer from './Footer'
 import Navbar from './Navbar'
-import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
-import { IncreaseQuantity, DecreaseQuantity, DeleteCart, RemoveSelectedProduct } from '../actions'
+import { Link, useParams, useNavigate } from 'react-router-dom'
+import { 
+    IncreaseQuantity, 
+    DecreaseQuantity, 
+    DeleteItem, 
+    RemoveSelectedProduct, 
+    CreateOrder, 
+    DeleteCart
+} from '../actions'
 
 function Cart() {
     const dispatch = useDispatch()
-    const { cart } = useSelector(store => store.cart.cart)
+    const navigate = useNavigate()
+    const date = new Date()
     const { productId } = useParams()
-    const { selectedProduct } = useSelector(state => state.cart.cart)
+    const { cart, selectedProduct } = useSelector(state => state)
+
     const [totalItems, setTotalItems] = useState(0)
     const [totalPrice, setTotalPrice] = useState(0)
+    const [email, setEmail] = useState("")
+    const [name, setName] = useState("")
+    const [address, setAddress] = useState("")
+    const [payment, setPayment] = useState("")
+
+    const validateForm = e => {
+        e.preventDefault()
+        if (payment === "" || email === "" || name === "" || address === "") {
+            alert("All form must be filled out.")
+        } else {
+            alert("Form filled successfully!")
+            createOrder()
+        }
+    } 
+
+    const handlePayment = e => {
+        setPayment(e.target.value)
+    }
+
+    const createOrder = () => {
+        let order = {
+            id: Math.floor(Math.random() * 1000000000000 + 1),
+            email: email,
+            name: name,
+            address: address,
+            paymentMethods: payment,
+            totalItems: `${cart.length} items`,
+            total: `$${totalPrice}`,
+            time: date.toLocaleTimeString() + ' - ' + date.toLocaleDateString(),
+        }
+        dispatch(CreateOrder(order))
+    }
 
     useEffect(() => {
+        // console.log(cart)
         let items = 0
         let price = 0
 
         cart.forEach(item => {
-            console.log(item)
             items += item.qty
             price += item.qty * item.price
         })
@@ -27,132 +67,188 @@ function Cart() {
         setTotalPrice(price.toFixed(2))
         setTotalItems(items)
 
-        if (productId === undefined && selectedProduct !== null) {
-            dispatch(RemoveSelectedProduct())
-        }
+        if (productId === undefined && selectedProduct !== null) dispatch(RemoveSelectedProduct())
 
-    }, [cart, totalPrice, totalItems, setTotalPrice, setTotalItems, dispatch, productId, selectedProduct])
+    }, [cart, totalPrice, totalItems, setTotalPrice, setTotalItems, dispatch, productId, selectedProduct, payment])
 
 
   return (
     <>  
         <Navbar />
 
-        <section className="h-100 h-custom" style={{backgroundColor: "#d2c9ff"}}>
-            <div className="container py-5 h-100">
-                <div className="row d-flex justify-content-center align-items-center h-100">
-                    <div className="col-12">
-                        <div className="card card-registration card-registration-2" style={{borderRadius: "15px"}}>
-                            <div className="card-body p-0">
-                                <div className="row g-0">
-                                    <div className="col-lg-8">
-                                        <div className="p-5">
+        <section className="cart">
+            <div className="container grid">
 
-                                            <div className="d-flex justify-content-between align-items-center mb-5">
-                                                <h1 className="fw-bold mb-0 text-black">Shopping Cart</h1>
-                                                <h6 className="mb-0 text-muted">{cart.length} items</h6>
-                                            </div>
-                                            
-                                            <hr className="my-4" />
-
-                                            {/* Product */}
-                                            {cart.map(item => (
-                                                <>
-                                                    <div key={item.id} className="row mb-4 d-flex justify-content-between align-items-center">
-                                                        <div className="col-md-2 col-lg-2 col-xl-2">
-                                                            <img
-                                                                src={item.image}
-                                                                className="img-fluid rounded-3" 
-                                                                alt="Cotton T-shirt"
-                                                            />
-                                                        </div>
-                                                        <div className="col-md-3 col-lg-3 col-xl-3">
-                                                            <h6 className="text-muted">{item.category}</h6>
-                                                            <h6 className="text-black mb-0">{item.title}</h6>
-                                                        </div>
-                                                        <div className="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                                            {/* <input id="form1" min="0" name="quantity" type="text" className="form-control form-control-sm" /> */}
-                                                            <button onClick={() => dispatch(DecreaseQuantity(item.id))}>-</button>
-                                                            <h5>{item.qty}</h5>
-                                                            <button onClick={() => dispatch(IncreaseQuantity(item.id))}>+</button>
-                                                        </div>
-                                                        <div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                                            <h6 className="mb-0">${item.price}</h6>
-                                                        </div>
-                                                        <div className="col-md-1 col-lg-1 col-xl-1 text-end">
-                                                            <button onClick={() => dispatch(DeleteCart(item.id))}>x</button>
-                                                            {/* <a href="#/" className="text-muted"><i className="fas fa-times"></i></a> */}
-                                                        </div>
-                                                    </div>
-                                                    <hr className="my-4" />
-                                                </>
-                                            ))}
-                                            {/* Product */}
+                <div className="cart-title">
+                    <h1 className="text-center" style={{ fontSize: "6vh" }}>Shopping Cart</h1>
+                    <hr />
+                </div>
 
 
-                                            <Link to={`/react-shopping-cart`}>
-                                                <div className="pt-5">
-                                                    <h6 className="mb-0"><a href="#!" className="text-body">
-                                                        <i className="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a>
-                                                    </h6>
-                                                </div>
-                                            </Link>
-
-                                        </div>
+                {/* Product */}
+                <div className="cart-column">
+                    {cart.map(item => (
+                        <div key={item.id}>
+                            <div className="cart-item">
+                                <div className="image col1">
+                                    <img src={item.image} alt={item.title} />
+                                </div>
+                                <div className="col2">
+                                    <div>
+                                        <h5 style={{fontWeight: "lighter"}}>{item.category}</h5>
                                     </div>
-                                    
-                                    {/* Summary */}
-                                    <div className="col-lg-4 bg-grey">
-                                        <div className="p-5">
-                                            <h3 className="fw-bold mb-5 mt-2 pt-1">Summary</h3>
-                                            <hr className="my-4" />
-
-                                            {cart.map(item => (    
-                                                <div key={item.id} className="d-flex justify-content-between mb-4">
-                                                    <h5>{item.title}</h5>
-                                                    <h5>$ {item.price} x {item.qty}</h5>
-                                                </div>
-                                            ))}
-                                            <hr className="my-4" />
-                                            <div className="d-flex justify-content-between mb-5">
-                                                <h5>Total: {totalItems} items</h5>
-                                                <h5>$ {totalPrice}</h5>
-                                            </div>
-
-                                            <hr />
-
-                                            <div className="mb-3">
-                                                <h5 className="mb-3">Email</h5>
-                                                <div className="form-outline">
-                                                <input type="text" id="form3Examplea2" className="form-control form-control-lg" />
-                                                </div>
-                                            </div>
-                                            <div className="mb-3">
-                                                <h5 className="mb-3">Name</h5>
-                                                <div className="form-outline">
-                                                <input type="text" id="form3Examplea2" className="form-control form-control-lg" />
-                                                </div>
-                                            </div>
-                                            <div className="mb-5">
-                                                <h5 className="mb-3">Address</h5>
-                                                <div className="form-outline">
-                                                <input type="text" id="form3Examplea2" className="form-control form-control-lg" />
-                                                </div>
-                                            </div>
-                                            <button 
-                                                type="button"
-                                                className="btn btn-dark btn-block btn-lg"
-                                                data-mdb-ripple-color="dark"
-                                            >Checkout</button>
-
+                                    <div>
+                                        <h3>{item.title}</h3>
+                                    </div>
+                                </div>
+                                <div className="col3">
+                                    <div>
+                                        <button className="btn btn-b" onClick={() => dispatch(DecreaseQuantity(item.id))}>
+                                            -
+                                        </button>
+                                        <button className="btn btn-qty">
+                                            <h5>{item.qty}</h5>
+                                        </button>
+                                        <button className="btn btn-b" onClick={() => dispatch(IncreaseQuantity(item.id))}>
+                                            +
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="col4">
+                                    <h3>
+                                        ${item.price * item.qty}
+                                    </h3>
+                                    <div style={{ width: "10vh" }}>
+                                        <div>
+                                            <button className="btn" onClick={() => dispatch(DeleteItem(item.id))}>
+                                                <svg 
+                                                    xmlns="http://www.w3.org/2000/svg" 
+                                                    preserveAspectRatio="xMidYMid meet" 
+                                                    viewBox="0 0 16 16"
+                                                >
+                                                    <path 
+                                                        fill="currentColor" 
+                                                        fillRule="evenodd" 
+                                                        d="M10 3h3v1h-1v9l-1 1H4l-1-1V4H2V3h3V2a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v1zM9 2H6v1h3V2zM4 13h7V4H4v9zm2-8H5v7h1V5zm1 0h1v7H7V5zm2 0h1v7H9V5z" 
+                                                        clipRule="evenodd"
+                                                    />
+                                                </svg>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <hr style={{ marginBottom: "1em" }} />
+                        </div>
+                    ))}
+
+                    <div className="back-btn" style={{ width: "22%" }}>
+                        <Link to={`/react-shopping-cart`}>
+                            <div className="back">
+                                <div>
+                                    <svg 
+                                        xmlns="http://www.w3.org/2000/svg" 
+                                        preserveAspectRatio="xMidYMid meet" 
+                                        viewBox="0 0 16 16"
+                                    >
+                                        <path 
+                                            fill="none" 
+                                            stroke="currentColor" 
+                                            strokeLinecap="round" 
+                                            strokeLinejoin="round" 
+                                            strokeWidth="1.5" 
+                                            d="M10.25 3.75L5.75 8l4.5 4.25"
+                                        />
+                                    </svg>
+                                </div>
+                                <div style={{ padding: "0 10px" }}>
+                                    <h3>Back to Shop</h3>
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
+
+                </div>
+                {/* Product */}
+
+                {/* Summary */}
+
+                <div className="precheckout">
+
+                    <div className="summary">
+                        <div className="summary-row">
+                            <h2 style={{ fontSize: "4.5vh", paddingTop: "11%" }}>Summary</h2>
+                            <h5 style={{ color: "rgb(100, 100, 100)", paddingTop: "25px" }}>Subtotal : $ {totalPrice} </h5>
+                            <h5 style={{ color: "rgb(100, 100, 100)" }}>Shipping : Free</h5>
+                            <hr />
+                            <h3>Total : $ {totalPrice}</h3>
+                            <div>
+                            </div>
                         </div>
                     </div>
+
+                    <div className="payment">
+                        <div>
+                            <h2 style={{ fontSize: "4.5vh" }}>Payment</h2>
+                            <h4>Payment methods: </h4>
+                            
+                            <form name="form" className="form" onSubmit={validateForm}>
+                                <div className="methods">
+                                    <div>
+                                        <input type="radio" name="payment" value="Gopay" onChange={handlePayment} />
+                                        <h4>Gopay</h4>
+                                    </div>
+                                    <div>
+                                        <input type="radio" name="payment" value="ShopeePay" onChange={handlePayment} />
+                                        <h4>ShopeePay</h4>
+                                    </div>
+                                    <div>
+                                        <input type="radio" name="payment" value="Bank Transfer" onChange={handlePayment} />
+                                        <h4>Bank Transfer</h4>
+                                    </div>
+                                </div>
+
+                                <div className="input">
+                                    <div>
+                                        <h4>Email</h4>
+                                        <div>
+                                            <input name="email" type="email" onChange={e => setEmail(e.target.value)} />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h4>Name</h4>
+                                        <div>
+                                            <input name="name" type="text" onChange={e => setName(e.target.value)} />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h4>Address</h4>
+                                        <div className="addr">
+                                            <textarea name="address" rows="6" onChange={e => setAddress(e.target.value)} />
+                                        </div>
+                                    </div>
+                                    <button 
+                                        type="submit"
+                                        className="btn dark"
+                                        onClick={() => {
+                                            if (payment === "" || email === "" || name === "" || address === "") {
+                                                return
+                                            }
+                                            setTimeout(() => {
+                                                dispatch(DeleteCart())
+                                                navigate("/react-shopping-cart/checkout")
+                                            }, 1000)
+                                        }}
+                                    >Checkout</button>
+                                    {/* {email + name + address} */}
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>     
                 </div>
-            </div>
+                    
+            </div>                           
         </section>
 
         <Footer />
