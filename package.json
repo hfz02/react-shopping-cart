@@ -2,7 +2,7 @@
   "homepage": "https://hfz02.github.io/react-shopping-cart",
   "name": "react-shopping-cart",
   "version": "0.1.0",
-  "private": false,
+  "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.5",
     "@testing-library/jest-dom": "^5.16.5",
@@ -11,6 +11,7 @@
     "axios": "^0.27.2",
     "bootstrap": "^5.2.1",
     "dotenv": "^16.0.2",
+    "gh-pages": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.2",
