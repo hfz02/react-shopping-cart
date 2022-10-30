@@ -2,7 +2,7 @@ import axios from "axios"
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
-import { AddToCart, GetAllProducts, GetSelectedProduct, RemoveSelectedProduct } from '../actions'
+import { AddToCart, GetAllProducts, GetSelectedProduct, RemoveSelectedProduct } from '../redux/actions'
 
 
 function Products() {
@@ -44,7 +44,7 @@ function Products() {
                                         <div className="header">{_product.title}</div>
                                         <div style={{ marginBottom: "10px" }}>$ {_product.price.toFixed(2)}</div>
                                         <button onClick={() => dispatch(AddToCart(_product.id))} className="btn dark">Add to Bag</button>
-                                        <Link to={`/react-shopping-cart/product/${_product.id}`}>
+                                        <Link to={`/product/${_product.id}`}>
                                             <button 
                                             onClick={() => dispatch(GetSelectedProduct(_product))} 
                                             className="btn">View detail</button>

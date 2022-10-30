@@ -1,8 +1,8 @@
 import { Routes, Route } from "react-router-dom"
-import Home from "./simple-sc/components/Home"
-import Product from "./simple-sc/components/Product"
-import Cart from "./simple-sc/components/Cart"
-import Checkout from "./simple-sc/components/Checkout"
+import Home from "./components/Home"
+import Product from "./components/Product"
+import Cart from "./components/Cart"
+import Checkout from "./components/Checkout"
 import "./App.css"
 
 function App() {

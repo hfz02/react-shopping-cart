@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { ClearOrder } from '../actions'
+import { ClearOrder } from '../redux/actions'
 
 
 function Products() {

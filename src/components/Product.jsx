@@ -2,10 +2,10 @@ import axios from 'axios'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import { useDispatch, useSelector } from 'react-redux'
-import { AddToCart } from '../actions'
+import { AddToCart } from '../redux/actions'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { GetSelectedProduct } from '../actions'
+import { GetSelectedProduct } from '../redux/actions'
 
 
 function Product() {
@@ -53,7 +53,7 @@ function Product() {
                             <p>{selectedProduct.description}</p>
                             <h4>Current Price: <span>$ {selectedProduct.price}</span></h4>
                             <button onClick={() => dispatch(AddToCart(selectedProduct.id))} type="button" className="btn dark">Add to Bag</button>
-                            <button onClick={() => navigate('/react-shopping-cart')} type="button" className="btn" style={{ marginLeft: "5px" }}>Back to Shop</button>
+                            <button onClick={() => navigate('/')} type="button" className="btn" style={{ marginLeft: "5px" }}>Back to Shop</button>
                         </div>
                     </div>
                     )

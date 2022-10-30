@@ -10,7 +10,7 @@ import {
     RemoveSelectedProduct, 
     CreateOrder, 
     DeleteCart
-} from '../actions'
+} from '../redux/actions'
 
 function Cart() {
     const dispatch = useDispatch()
@@ -25,6 +25,8 @@ function Cart() {
     const [name, setName] = useState("")
     const [address, setAddress] = useState("")
     const [payment, setPayment] = useState("")
+
+    // cart === null
 
     const validateForm = e => {
         e.preventDefault()
@@ -80,7 +82,7 @@ function Cart() {
             <div className="container grid">
 
                 <div className="cart-title">
-                    <h1 className="text-center" style={{ fontSize: "6vh" }}>Shopping Cart</h1>
+                    <h1 className="text-center">Shopping Cart</h1>
                     <hr />
                 </div>
 
@@ -143,7 +145,7 @@ function Cart() {
                     ))}
 
                     <div className="back-btn" style={{ width: "22%" }}>
-                        <Link to={`/react-shopping-cart`}>
+                        <Link to={`/`}>
                             <div className="back">
                                 <div>
                                     <svg 
@@ -188,7 +190,7 @@ function Cart() {
                     </div>
 
                     <div className="payment">
-                        <div>
+                        <div className="payment-row">
                             <h2 style={{ fontSize: "4.5vh" }}>Payment</h2>
                             <h4>Payment methods: </h4>
                             
@@ -236,7 +238,7 @@ function Cart() {
                                             }
                                             setTimeout(() => {
                                                 dispatch(DeleteCart())
-                                                navigate("/react-shopping-cart/checkout")
+                                                navigate("/checkout")
                                             }, 1000)
                                         }}
                                     >Checkout</button>

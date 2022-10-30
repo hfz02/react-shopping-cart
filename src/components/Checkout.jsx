@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate, Navigate } from 'react-router-dom'
-import { ClearOrder } from '../actions'
+import { ClearOrder } from '../redux/actions'
 
 
 function Products() {
@@ -57,7 +57,7 @@ function Products() {
                     onClick={() => 
                         setTimeout(() => {
                             dispatch(ClearOrder())
-                            return navigate('/react-shopping-cart')
+                            return navigate('/')
                         }, 80) 
                     }
                 >  
@@ -86,7 +86,7 @@ function Products() {
             </div>
         </div>
         :
-        <Navigate to="/react-shopping-cart" replace={true} />
+        <Navigate to="/" replace={true} />
 }
 
 export default Products

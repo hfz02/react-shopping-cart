@@ -7,14 +7,14 @@ function Footer() {
   return (
     <footer className="footer py-5">
       <div className="container flex">
-          <div>
+          <div className="copyright">
             <p>&copy; 2022 Fake Distro, All rights reserved</p>
           </div>
           <ul>
-            <Link to={`/react-shopping-cart`}>
+            <Link to={`/`}>
               <li>Home</li>
             </Link>
-            <Link to={`/react-shopping-cart/cart`}>
+            <Link to={`/cart`}>
               <li>Shopping Bag ({cart.length})</li>
             </Link>
           </ul>

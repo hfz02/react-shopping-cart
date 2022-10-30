@@ -45,10 +45,10 @@ function Navbar() {
             </div>
         </div>
         <div className={toggle ? "sidebar-active" : "sidebar"}>
-            <Link to={`/react-shopping-cart`}>
+            <Link to={`/`}>
                 Home
             </Link>
-            <Link to={`/react-shopping-cart/cart`}>
+            <Link to={`/cart`}>
             <svg 
                 xmlns="http://www.w3.org/2000/svg" 
                 width="1em" 

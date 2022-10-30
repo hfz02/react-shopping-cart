@@ -5,7 +5,7 @@ function Hero() {
   return (
         <section className="hero">
             <Navbar />
-            <img src={require("./images/mockup-white-wall-with-flower-vase-shelf3d-rendering.jpg")} alt="freepik - https://www.freepik.com/author/vanitjan1" />
+            <img src={require("./assets/mockup-white-wall-with-flower-vase-shelf3d-rendering.jpg")} alt="freepik - https://www.freepik.com/author/vanitjan1" />
             <div className="container grid">
                 
                 <div className="hero-text">
