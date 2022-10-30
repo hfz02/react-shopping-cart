@@ -9,10 +9,10 @@ function App() {
 
   return (
       <Routes>
-        <Route path="/react-shopping-cart" exact element={<Home />} />
-        <Route path="/react-shopping-cart/product/:productId" exact element={<Product />} />
-        <Route path="/react-shopping-cart/cart" exact element={<Cart />} />
-        <Route path="/react-shopping-cart/checkout" exact element={<Checkout />} />
+        <Route path="/" exact element={<Home />} />
+        <Route path="/product/:productId" exact element={<Product />} />
+        <Route path="/cart" exact element={<Cart />} />
+        <Route path="/checkout" exact element={<Checkout />} />
       </Routes>
   )
 }
