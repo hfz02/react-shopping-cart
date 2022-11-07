@@ -3,7 +3,8 @@ import Home from "./components/Home"
 import Product from "./components/Product"
 import Cart from "./components/Cart"
 import Checkout from "./components/Checkout"
-import "./App.css"
+// import "./App.css"
+import "./css/main.css"
 
 function App() {
 

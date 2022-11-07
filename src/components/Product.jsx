@@ -45,7 +45,7 @@ function Product() {
                     // <h1>Data has been fetched</h1>
                     <div className="container grid">
                         <div className="product-detail left">
-                            <img style={{ width: "400px" }} src={selectedProduct.image} alt='' />
+                            <img style={{ width: "400px", backgroundColor: "red" }} src={selectedProduct.image} alt='' />
                         </div>
                         <div className="product-detail right">
                             <h5>Category : {selectedProduct.category}</h5>
